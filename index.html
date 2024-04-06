@@ -1,26 +1,33 @@
 <!DOCTYPE html>
-<!-- saved from url=(0036)https://noahabebe.github.io/WebNews/ -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="./index_files/all.min.css">
- 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
   <title>Eurika: NewsCenter</title>
 
   <style>
     .tabcontent {
-      animation: fadeEffect 1s; /* Fading effect takes 1 second */
-     
+      animation: fadeEffect 1s;
+      /* Fading effect takes 1 second */
+
     }
 
     /* Go from zero to full opacity */
     @keyframes fadeEffect {
-      from {opacity: 0;}
-      to {opacity: 1;}
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
-    
+
     .tab {
       overflow: hidden;
       margin-right: 30px;
@@ -42,6 +49,7 @@
       transition: 0.3s;
     }
 
+    
     /* Change background color of buttons on hover */
     .tab button:hover {
       background-color: #FAF1E5;
@@ -51,23 +59,31 @@
     .tab button.active {
       background-color: #FAF1E5;
       border-bottom: 3px solid black;
-      transition: border-bottom 3s; /* Delay for animation */
-      position: relative; /* Add sliding feature for underline */
+      transition: border-bottom 3s;
+      /* Delay for animation */
+      position: relative;
+      /* Add sliding feature for underline */
     }
 
     /* Style the tab content */
     .tabcontent {
-      display: none;
-      background-color: #1d1e22;
-      height: 1000px;
+      display: flex; /* Changed grid to flex for horizontal alignment */
+      justify-content: center;
+      gap: 20px;
       border-radius: 15px;
       transform: translateY(20px);
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Adjust the min and max width of each column */
-      gap: 20px; /* Adjust the gap between grid items */
-      justify-content: center;
+      flex-direction: row; /* Changed direction to row */
     }
-    header{
+
+    .card-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+      flex-wrap: wrap;
+    }
+
+    header {
       background-color: #FAF1E5;
       padding: 20px;
       text-align: center;
@@ -75,7 +91,7 @@
       border-radius: 15px;
     }
 
-    #search{
+    #search {
       width: 50%;
       padding: 10px;
       border: 1px solid #ccc;
@@ -89,29 +105,49 @@
     /* Apply the font family to the body */
     body {
       font-family: 'Roboto', sans-serif;
+
     }
 
     main {
-      background-color: #1d1e22;
+      
       border-radius: 15px;
       transform: translateY(-20px);
+      display: flex;
+      flex-direction: row;
     }
+
     h1 {
       margin: 0;
     }
 
-   
+
 
     .card {
+      display: flex;
+      flex-direction: column;
       background-color: whitesmoke;
-      width: 50px;
-      height: 30px;
+      width: calc(25% - 20px); /* Set initial width */
+      max-width: 150px; /* Set maximum width */
+      min-width: 120px; /* Set minimum width */
+      height: 150px; /* Set initial height */
       padding: 20px;
-      color: whitesmoke;
-      margin: 10px;
+      color: black;
       border-radius: 15px;
-      border: 11px solid;
       background-size: cover;
+      margin: 10px; /* Adjust margin as needed */
+      flex: 1 1 auto; /* Allow flex-grow and flex-shrink */
+    }
+
+    @media screen and (max-width: 768px) {
+      .card {
+        width: calc(50% - 20px); /* Adjust width for smaller screens */
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .card {
+        width: calc(100% - 20px); /* Adjust width for even smaller screens */
+      }
     }
 
     /* Style the navigation */
@@ -162,25 +198,27 @@
     }
   </style>
 </head>
+
 <body>
   <header>
     <input type="search" id="search" placeholder="Search...">
     <!-- Original navigation icons -->
 
     <div style="border: none;" class="tab">
-      <button class="tablinks active" onclick="openCity(event, &#39;London&#39;)" id="defaultOpen"><i class="fa fa-home"></i> <br> London</button>
-      <button class="tablinks" onclick="openCity(event, &#39;Paris&#39;)"><i class="fa fa-home"></i> <br>
+      <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen"><i class="fa fa-home"></i> </br>
+        London</button>
+      <button class="tablinks" onclick="openCity(event, 'Paris')"><i class="fa fa-home"></i> </br>
         Paris</button>
-      <button class="tablinks" onclick="openCity(event, &#39;Tokyo&#39;)"><i class="fa fa-home"></i> <br> Tokyo</button>
-      
+      <button class="tablinks" onclick="openCity(event, 'Tokyo')"><i class="fa fa-home"></i> </br> Tokyo</button>
+
     </div>
 
     <nav>
       <ul>
-        <li><a href="https://noahabebe.github.io/WebNews/#"><i class="fa fa-home"></i><span>Home</span></a></li>
-        <li><a href="https://noahabebe.github.io/WebNews/#"><i class="fa fa-shopping-cart"></i><span>Shop</span></a></li>
-        <li><a href="https://noahabebe.github.io/WebNews/#"><i class="fa fa-user"></i><span>Account</span></a></li>
-        <li><a href="https://noahabebe.github.io/WebNews/#"><i class="fa fa-info-circle"></i><span>About</span></a></li>
+        <li><a href="#"><i class="fa fa-home"></i><span>Home</span></a></li>
+        <li><a href="#"><i class="fa fa-shopping-cart"></i><span>Shop</span></a></li>
+        <li><a href="#"><i class="fa fa-user"></i><span>Account</span></a></li>
+        <li><a href="#"><i class="fa fa-info-circle"></i><span>About</span></a></li>
       </ul>
     </nav>
     <!-- Shelf icon for side navigation -->
@@ -188,29 +226,35 @@
   </header>
 
   <main>
-  <!-- Tab content -->
-  <div class="card-container">
-    <div id="London" class="tabcontent" style="display: block;"><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons" alt="ABC News Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">ABC News</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(1)" alt="ABC News (AU) Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">ABC News (AU)</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(2)" alt="Aftenposten Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Aftenposten</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(3)" alt="Al Jazeera English Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Al Jazeera English</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(4)" alt="ANSA.it Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">ANSA.it</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(5)" alt="Argaam Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Argaam</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(6)" alt="Ars Technica Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Ars Technica</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(7)" alt="Ary News Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Ary News</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(8)" alt="Associated Press Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Associated Press</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(9)" alt="Australian Financial Review Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Australian Financial Review</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(10)" alt="Axios Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Axios</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(11)" alt="BBC News Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">BBC News</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(12)" alt="BBC Sport Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">BBC Sport</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(13)" alt="Bild Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Bild</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(14)" alt="Blasting News (BR) Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Blasting News (BR)</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(15)" alt="Bleacher Report Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Bleacher Report</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(16)" alt="Bloomberg Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Bloomberg</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(17)" alt="Breitbart News Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Breitbart News</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(18)" alt="Business Insider Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Business Insider</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(19)" alt="Business Insider (UK) Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Business Insider (UK)</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(20)" alt="Buzzfeed Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Buzzfeed</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(21)" alt="CBC News Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">CBC News</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(22)" alt="CBS News Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">CBS News</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(23)" alt="CNN Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">CNN</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(24)" alt="CNN Spanish Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">CNN Spanish</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(25)" alt="Crypto Coins News Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Crypto Coins News</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(26)" alt="Der Tagesspiegel Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Der Tagesspiegel</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(27)" alt="Die Zeit Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Die Zeit</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(28)" alt="El Mundo Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">El Mundo</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(29)" alt="Engadget Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Engadget</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(30)" alt="Entertainment Weekly Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Entertainment Weekly</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(31)" alt="ESPN Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">ESPN</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(32)" alt="ESPN Cric Info Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">ESPN Cric Info</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(33)" alt="Financial Post Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Financial Post</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(34)" alt="Focus Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Focus</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(35)" alt="Football Italia Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Football Italia</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(36)" alt="Fortune Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Fortune</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(37)" alt="FourFourTwo Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">FourFourTwo</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(38)" alt="Fox News Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Fox News</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(39)" alt="Fox Sports Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Fox Sports</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(40)" alt="Globo Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Globo</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(41)" alt="Google News Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Google News</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(41)" alt="Google News (Argentina) Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Google News (Argentina)</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(41)" alt="Google News (Australia) Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Google News (Australia)</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(41)" alt="Google News (Brasil) Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Google News (Brasil)</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(41)" alt="Google News (Canada) Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Google News (Canada)</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(41)" alt="Google News (France) Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Google News (France)</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(41)" alt="Google News (India) Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Google News (India)</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(41)" alt="Google News (Israel) Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Google News (Israel)</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(41)" alt="Google News (Italy) Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Google News (Italy)</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(41)" alt="Google News (Russia) Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Google News (Russia)</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(41)" alt="Google News (Saudi Arabia) Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Google News (Saudi Arabia)</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(41)" alt="Google News (UK) Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Google News (UK)</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(42)" alt="Göteborgs-Posten Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Göteborgs-Posten</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(43)" alt="Gruenderszene Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Gruenderszene</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(44)" alt="Hacker News Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Hacker News</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(45)" alt="Handelsblatt Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Handelsblatt</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(46)" alt="IGN Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">IGN</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(47)" alt="Il Sole 24 Ore Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Il Sole 24 Ore</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(48)" alt="Independent Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Independent</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(49)" alt="Infobae Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Infobae</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(50)" alt="InfoMoney Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">InfoMoney</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(51)" alt="La Gaceta Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">La Gaceta</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(52)" alt="La Nacion Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">La Nacion</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(53)" alt="La Repubblica Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">La Repubblica</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(54)" alt="Le Monde Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Le Monde</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(55)" alt="Lenta Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Lenta</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(56)" alt="L&#39;equipe Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">L'equipe</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(57)" alt="Les Echos Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Les Echos</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(58)" alt="Libération Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Libération</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(59)" alt="Marca Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Marca</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(60)" alt="Mashable Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Mashable</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(61)" alt="Medical News Today Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Medical News Today</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(62)" alt="MSNBC Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">MSNBC</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(63)" alt="MTV News Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">MTV News</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(64)" alt="MTV News (UK) Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">MTV News (UK)</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(65)" alt="National Geographic Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">National Geographic</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(66)" alt="National Review Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">National Review</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(67)" alt="NBC News Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">NBC News</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(68)" alt="News24 Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">News24</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(69)" alt="New Scientist Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">New Scientist</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(70)" alt="News.com.au Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">News.com.au</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(71)" alt="Newsweek Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Newsweek</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(72)" alt="New York Magazine Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">New York Magazine</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(73)" alt="Next Big Future Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Next Big Future</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(74)" alt="NFL News Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">NFL News</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(75)" alt="NHL News Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">NHL News</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(76)" alt="NRK Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">NRK</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(77)" alt="Politico Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Politico</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(78)" alt="Polygon Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Polygon</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(79)" alt="RBC Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">RBC</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(80)" alt="Recode Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Recode</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(81)" alt="Reddit /r/all Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Reddit /r/all</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(82)" alt="Reuters Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Reuters</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(83)" alt="RT Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">RT</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(84)" alt="RTE Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">RTE</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(85)" alt="RTL Nieuws Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">RTL Nieuws</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(86)" alt="SABQ Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">SABQ</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(87)" alt="Spiegel Online Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Spiegel Online</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(88)" alt="Svenska Dagbladet Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Svenska Dagbladet</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(89)" alt="T3n Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">T3n</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(90)" alt="TalkSport Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">TalkSport</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(91)" alt="TechCrunch Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">TechCrunch</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(92)" alt="TechCrunch (CN) Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">TechCrunch (CN)</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(93)" alt="TechRadar Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">TechRadar</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(94)" alt="The American Conservative Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">The American Conservative</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(95)" alt="The Globe And Mail Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">The Globe And Mail</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(96)" alt="The Hill Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">The Hill</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(97)" alt="The Hindu Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">The Hindu</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(98)" alt="The Huffington Post Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">The Huffington Post</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(99)" alt="The Irish Times Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">The Irish Times</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(100)" alt="The Jerusalem Post Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">The Jerusalem Post</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(101)" alt="The Lad Bible Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">The Lad Bible</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(102)" alt="The Next Web Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">The Next Web</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(103)" alt="The Sport Bible Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">The Sport Bible</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(104)" alt="The Times of India Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">The Times of India</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(105)" alt="The Verge Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">The Verge</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(106)" alt="The Wall Street Journal Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">The Wall Street Journal</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(107)" alt="The Washington Post Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">The Washington Post</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(108)" alt="The Washington Times Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">The Washington Times</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(109)" alt="Time Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Time</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(110)" alt="USA Today Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">USA Today</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(111)" alt="Vice News Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Vice News</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(112)" alt="Wired Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Wired</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(113)" alt="Wired.de Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Wired.de</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(114)" alt="Wirtschafts Woche Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Wirtschafts Woche</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(115)" alt="Xinhua Net Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Xinhua Net</p></div><div class="card" style="width: 150px; height: 150px; background-size: cover;"><img src="./index_files/favicons(116)" alt="Ynet Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"><p class="text" style="color: black; text-align: center; margin: 0px;">Ynet</p></div></div>
+    <!-- Tab content -->
+    <div class="card-container">
+      <div id="London"  class="tabcontent">
+        
+          <div class="card">
 
-    <div id="Paris" class="tabcontent" style="display: none;">
-      <h3>Paris</h3>
-      <p>Paris is the capital of France.</p>
-    </div>
+          </div>
+        
+      </div>
 
-    <div id="Tokyo" class="tabcontent" style="display: none;">
-      <h3>Tokyo</h3>
-      <p>Tokyo is the capital of Japan.</p>
+      <div id="Paris" class="tabcontent">
+        <h3>Paris</h3>
+        <p>Paris is the capital of France.</p>
+      </div>
+
+      <div id="Tokyo" class="tabcontent">
+        <h3>Tokyo</h3>
+        <p>Tokyo is the capital of Japan.</p>
+      </div>
     </div>
-  </div>
   </main>
 
   <script>
     // JavaScript to toggle the visibility of the side navigation menu
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const shelfIcon = document.getElementById('shelf-icon');
       const navMenu = document.querySelector('nav ul');
 
-      shelfIcon.addEventListener('click', function() {
+      shelfIcon.addEventListener('click', function () {
         navMenu.style.display = navMenu.style.display === 'block' ? 'none' : 'block';
       });
     });
@@ -238,9 +282,9 @@
 
     document.getElementById("defaultOpen").click();
 
-   
+
     async function fetchNews() {
-      
+
 
       try {
         const response = await fetch('https://noahabebe.github.io/WebNews/newsData.json');
@@ -253,60 +297,60 @@
     }
 
     async function createCards() {
-  const newsData = await fetchNews();
-  const cardContainer = document.querySelector('.tabcontent');
+      const newsData = await fetchNews();
+      const cardContainer = document.querySelector('.tabcontent');
 
-  // Clear existing cards
-  cardContainer.innerHTML = '';
+      // Clear existing cards
+      cardContainer.innerHTML = '';
 
-  // Check if newsData is undefined or null
-  if (!newsData || !newsData.sources) {
-    console.error('Invalid news data:', newsData);
-    return;
-  }
+      // Check if newsData is undefined or null
+      if (!newsData || !newsData.sources) {
+        console.error('Invalid news data:', newsData);
+        return;
+      }
 
-  // Iterate over the news sources
-  newsData.sources.forEach(source => {
-    const card = document.createElement('div');
-    card.classList.add('card');
+      // Iterate over the news sources
+      newsData.sources.forEach(source => {
+        const card = document.createElement('div');
+        card.classList.add('card');
 
-    card.style.width = '150px';
-    card.style.height = '150px';
-    card.style.backgroundSize = 'cover';
-    const logoUrl = 'http://www.google.com/s2/favicons?domain=' + source.url; // Construct favicon URL
-    const sourceName = source.name;
+        card.style.width = '150px';
+        card.style.height = '150px';
+        card.style.backgroundSize = 'cover';
+        const logoUrl = 'http://www.google.com/s2/favicons?domain=' + source.url; // Construct favicon URL
+        const sourceName = source.name;
 
-    // Create an image element for the logo
-    const logoImg = document.createElement('img');
-    logoImg.src = logoUrl;
-    logoImg.alt= sourceName + ' Logo';
-    logoImg.style.width = '80px';
-    logoImg.style.height = '80px';
-    logoImg.style.objectFit = 'cover';
-    logoImg.style.borderRadius = '50%';
-    logoImg.style.marginBottom = '10px';
+        // Create an image element for the logo
+        const logoImg = document.createElement('img');
+        logoImg.src = logoUrl;
+        logoImg.alt = sourceName + ' Logo';
+        logoImg.style.width = '80px';
+        logoImg.style.height = '80px';
+        logoImg.style.objectFit = 'cover';
+        logoImg.style.borderRadius = '50%';
+        logoImg.style.marginBottom = '10px';
 
-    const text = document.createElement('p');
-    text.classList.add('text');
-    text.textContent = sourceName;
+        const text = document.createElement('p');
+        text.classList.add('text');
+        text.textContent = sourceName;
 
-    text.style.color = 'black';
-    text.style.textAlign = 'center';
-    text.style.margin = '0';
+        text.style.color = 'black';
+        text.style.textAlign = 'center';
+        text.style.margin = '0';
 
-    // Append the logo image and text to the card
-    card.appendChild(logoImg);
-    card.appendChild(text);
+        // Append the logo image and text to the card
+        card.appendChild(logoImg);
+        card.appendChild(text);
 
-    // Append the card to the card container
-    cardContainer.appendChild(card);
-  });
-}
+        // Append the card to the card container
+        cardContainer.appendChild(card);
+      });
+    }
 
 
     // Call createCards function after the DOM content is loaded
     document.addEventListener('DOMContentLoaded', createCards);
   </script>
+</body>
 
-
-</body></html>
+</html>
