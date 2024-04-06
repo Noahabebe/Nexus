@@ -337,11 +337,7 @@
       cardContainer.style.flexDirection = 'row';
       
       
-      // Check if newsData is undefined or null
-      if (!newsData || !newsData.sources) {
-        console.error('Invalid news data:', newsData);
-        return;
-      }
+     
 
       // Iterate over the news sources
       newsData.sources.forEach(source => {
