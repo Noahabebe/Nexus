@@ -244,11 +244,10 @@
 
    
     async function fetchNews() {
-      const apiKey = '2d579c24b6984e26844108ae07f221ea' ; 
-      const apiUrl = 'https://newsapi.org/v2/sources?apiKey=' + apiKey; // Example API endpoint, replace with actual endpoint
+      
 
       try {
-        const response = await fetch(apiUrl);
+        const response = await fetch('server.js');
         const data = await response.json();
         console.log(data);
         return data;
