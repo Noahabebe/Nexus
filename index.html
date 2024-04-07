@@ -59,6 +59,21 @@
       
     }
     
+    .line {
+      width: 100%;
+      text-align: center;
+      margin-top: 20px; /* Adjusted margin-top */
+      margin-bottom: 20px; /* Added margin-bottom */
+    }
+
+    .line hr {
+      border: none;
+      border-bottom: 2px solid #ccc; /* Changed to border-bottom */
+      width: 90%; /* Adjust the width of the divider */
+    }
+
+
+    
     /* Change background color of buttons on hover */
     .tab button:hover {
       background-color: #FAF1E5;
@@ -247,7 +262,7 @@
     <div class="card-container">
       <div id="for-you"  class="tabcontent">
 
-        <ul id="ul-for-you"">
+        <ul id="ul-for-you">
           <li id="il-for-you">
         
           <div class="card">
@@ -260,8 +275,8 @@
           </li>
         </ul>
 
+        <br><br>
         <div class="line">
-
           <hr>
         </div>
       </div>
@@ -280,7 +295,7 @@
 
   <script>
     // JavaScript to toggle the visibility of the side navigation menu
-    document.addEventListener('DOMContentLoaded', function () {
+   document.addEventListener('DOMContentLoaded', function () {
       const shelfIcon = document.getElementById('shelf-icon');
       const navMenu = document.querySelector('nav ul');
 
@@ -312,6 +327,14 @@
 
     document.getElementById("defaultOpen").click();
 
+    defaultOpen = document.getElementById("defaultOpen");
+    
+    
+      
+   defaultOpen.addEventListener('click', function () {
+      createCards();
+      window.location.reload(); // Reload the page when default open tab is clicked
+    });
 
     async function fetchNews() {
     try {
@@ -336,13 +359,10 @@
 
 
       // Check if newsData is undefined or null
-      if (!newsData || !newsData.sources) {
-        console.error('Invalid news data:', newsData);
-        return;
-      }
+     
 
       // Iterate over the news sources
-      newsData.sources.forEach(source => {
+      newsData.forEach(source => {
         const card = document.createElement('div');
         card.classList.add('card');
         card.style.display = 'flex';
@@ -405,6 +425,8 @@
 
 
     createCards();
+
+    
 
     
   </script>
