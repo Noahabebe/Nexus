@@ -285,7 +285,7 @@
       document.addEventListener('DOMContentLoaded', async function () {
         async function fetchNews() {
           try {
-            const response = await fetch('https://noahabebe.github.io/WebNews/sourcesData.json');
+            const response = await fetch('https://noahabebe.github.io/Nexus/sourcesData.json');
             return await response.json();
           } catch (error) {
             console.error('Error fetching news data:', error);
@@ -295,7 +295,7 @@
 
         async function fetchArticles(sourceName) {
           try {
-            const response = await fetch('https://noahabebe.github.io/WebNews/articlesData.json');
+            const response = await fetch('https://noahabebe.github.io/Nexus/articlesData.json');
             const data = await response.json();
             return data.find(entry => entry.source === sourceName);
           } catch (error) {
