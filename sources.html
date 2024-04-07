@@ -134,24 +134,55 @@
     }
 
 
-
-    .card {
+    .top-headlines {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       background-color: whitesmoke;
-      width: calc(25% - 20px); /* Set initial width */
-      max-width: 150px; /* Set maximum width */
-      min-width: 120px;
-      max-height: 120px;/* Set minimum width */
-      height: 120px; /* Set initial height */
+      width: calc(100% - 55px);
+      max-width: 100%;
+      min-width: 500px;
+      max-height: 200px;
+      height: 500px;
       padding: 20px;
       color: black;
       border-radius: 30px;
       background-size: cover;
-      margin: 10px; /* Adjust margin as needed */
-      flex: 1 1 auto; 
-       margin-left: auto;/* Allow flex-grow and flex-shrink */
+      margin: 10px;
+      
+      
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
+
+    .top-headlines img {
+      width: 30%;
+      height: auto;
+      margin-right: 50px;
+      border-radius: 15px;
+    }
+
+    .top-headlines h4 {
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .cards {
+      display: flex;
+      flex-direction: column;
+      background-color: whitesmoke;
+      width: calc(25% - 20px);
+      max-width: 400px;
+      min-width: 300px;
+      max-height: 120px;
+      height: 120px;
+      padding: 20px;
+      color: black;
+      border-radius: 30px;
+      background-size: cover;
+      margin: 10px;
+      flex: 1 1 auto;
+    }
+
 
     @media screen and (max-width: 768px) {
       .card {
@@ -236,58 +267,113 @@
 
 
   
-  <main>
-    
-    <div class="source-info">
-      <h2 id="source-name"></h2>
-      <div id="source-description"></div>
-      <h3>Articles</h3>
-      <ul id="article-list"></ul>
-    </div>
-  </main>
+    <main>
+      <div class="source-info">
+        <h2 id="source-name"></h2>
+        <div id="source-description"></div>
+        <h3>Top Headlines</h3>
+        <div class="top-headlines" id="top-headlines-container">
+          <img id="top-headline-image" src="" alt="">
+          <h4 id="top-headline-title"></h4>
+        </div>
+        <h3>Articles</h3>
+        <div class="card-container" id="article-list"></div>
+      </div>
+    </main>
 
-  <script>
+    <script>
+      document.addEventListener('DOMContentLoaded', async function () {
+        async function fetchNews() {
+          try {
+            const response = await fetch('https://noahabebe.github.io/WebNews/sourcesData.json');
+            return await response.json();
+          } catch (error) {
+            console.error('Error fetching news data:', error);
+            return null;
+          }
+        }
 
-    document.addEventListener('DOMContentLoaded', async function () {
+        async function fetchArticles(sourceName) {
+          try {
+            const response = await fetch('https://noahabebe.github.io/WebNews/articlesData.json');
+            const data = await response.json();
+            return data.find(entry => entry.source === sourceName);
+          } catch (error) {
+            console.error('Error fetching articles data:', error);
+            return null;
+          }
+        }
+
+        const newsData = await fetchNews();
+
+        if (newsData) {
+          const urlParams = new URLSearchParams(window.location.search);
+          const sourceName = urlParams.get('source');
+
+          if (sourceName) {
+            const sourceArticles = await fetchArticles(sourceName);
+
+            if (sourceArticles) {
+              document.getElementById('source-name').textContent = sourceName;
+              document.getElementById('source-description').textContent = sourceArticles.description;
+
+              const topHeadlinesContainer = document.getElementById('top-headlines-container');
+              const topHeadlineImage = document.getElementById('top-headline-image');
+              const topHeadlineTitle = document.getElementById('top-headline-title');
+
+              if (sourceArticles.topHeadline) {
+                const topHeadline = sourceArticles.topHeadline;
+                topHeadlineImage.src = topHeadline.urlToImage;
+                topHeadlineImage.alt = topHeadline.title;
+                topHeadlineTitle.textContent = topHeadline.title;
+                
+              }
+
+              const articleContainer = document.getElementById('article-list');
+              sourceArticles.articles.forEach(article => {
+                const card = document.createElement('div');
+                card.classList.add('cards');
+                card.style.display = 'flex';
+                card.style.flexDirection = 'row';
+                card.style.height = '120px';
+                card.style.width = '300px';
+                const image = document.createElement('img');
+                image.src = article.urlToImage;
+                image.alt = article.title;
+                image.style.width = '50%';
+                image.style.height = 'auto';
+                image.style.borderRadius = '15px';
+                image.style.marginRight = '10px';
+
+                card.appendChild(image);
+
+                const title = document.createElement('h4');
+                title.textContent = article.title;
+                title.style.display = 'flex';
+                title.style.flexDirection = 'row';
+                title.style.justifyContent = 'top-right';
+                card.appendChild(title);
+
+                articleContainer.appendChild(card);
+              });
+            } else {
+              console.error('Source articles not found:', sourceName);
+            }
+          } else {
+            console.error('Source name not provided in the URL');
+          }
+        } else {
+          console.error('Error fetching news data');
+        }
+      });
+
       const shelfIcon = document.getElementById('shelf-icon');
       const navMenu = document.querySelector('nav ul');
 
       shelfIcon.addEventListener('click', function () {
         navMenu.style.display = navMenu.style.display === 'block' ? 'none' : 'block';
       });
-      
-      const urlParams = new URLSearchParams(window.location.search);
-      const sourceName = urlParams.get('source');
-
-      if (sourceName) {
-        document.getElementById('source-name').textContent = sourceName;
-        // Fetch detailed information about the selected news source
-        try {
-          const response = await fetch('https://noahabebe.github.io/WebNews/newsData.json');
-          const data = await response.json();
-          const source = data.sources.find(source => source.name === sourceName);
-          if (source) {
-            const sourceDescription = document.getElementById('source-description');
-            sourceDescription.textContent = source.description;
-
-            // Display articles related to the selected news source
-            const articleList = document.getElementById('article-list');
-            source.articles.forEach(article => {
-              const listItem = document.createElement('li');
-              listItem.textContent = article.title;
-              articleList.appendChild(listItem);
-            });
-          } else {
-            console.error('Source not found:', sourceName);
-          }
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        console.error('Source name not provided in the URL');
-      }
-    });
   </script>
-</body>
+  </body>
 
 </html>
