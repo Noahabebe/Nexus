@@ -13,7 +13,182 @@
 
   <style>
    
+    #video {
+      box-sizing: border-box;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+    }
+    play-card {
+      --blur: 16px;
+      --size: clamp(300px, 50vmin, 600px);
+      width: var(--size);
+      aspect-ratio: 4 / 3;
+      position: relative;
+      border-radius: 2rem;
+      overflow: hidden;
+      color: #000;
+      background-color: #FAF1E5;
+      background-image: url('https://noahabebe.github.io/Nexus/nexus.png');
+      transform: translateZ(0);
+      margin-bottom: 2rem;
+      margin-left: 2rem;
+    }
 
+    .card__img {
+      width: 100%;
+      height: 100%;
+      background-color: #FAF1E5;
+      transform: scale(calc(1 + (var(--hover, 0) * 0.25))) rotate(calc(var(--hover, 0) * -5deg));
+      transition: transform 0.2s;
+    }
+
+    .card__footer {
+      padding: 0 1.5rem;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: red;
+      display: grid;
+      grid-template-row: auto auto;
+      gap: 0.5ch;
+      background: hsl(0 0% 100% / 0.5);
+      backdrop-filter: blur(var(--blur));
+      height: 30%;
+      align-content: center;
+    }
+
+    .card__action {
+      position: absolute;
+      aspect-ratio: 1;
+      width: calc(var(--size) * 0.15);
+      bottom: 30%;
+      right: 1.5rem;
+      transform: translateY(50%)
+        translateY(
+          calc(
+            (var(--size) * 0.4)
+          )
+        )
+        translateY(calc(var(--hover, 0) * (var(--size) * -0.4)));
+      background: purple;
+      display: grid;
+      place-items: center;
+      border-radius: 0.5rem;
+      background: hsl(0 0% 100% / 0.5);
+    /*   backdrop-filter: blur(calc(var(--blur) * 0.5)); */
+      transition: transform 0.2s;
+    }
+
+    .card__action svg {
+      aspect-ratio: 1;
+      width: 50%;
+    }
+
+    .card__footer span:nth-of-type(1) {
+      font-size: calc(var(--size) * 0.065);
+    }
+
+    .card__footer span:nth-of-type(2) {
+      font-size: calc(var(--size) * 0.035);
+    }
+
+    .play-card:is(:hover, :focus-visible) {
+      --hover: 1;
+    }
+   
+    
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        margin: 10px;
+        z-index: 1000;
+    }
+    .dropdown-content {
+        display: none;
+        position: relative;
+        background-color: whitesmoke;
+        min-width: 160px;
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        z-index: 1001;
+        cursor: pointer;
+    }
+
+   
+    .dropdown-content div {
+        padding: 12px 16px;
+        cursor: pointer;
+        
+    }
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+    .dropdown: .dropdown-content {
+        border-bottom: solid;
+    }
+    dropdown:active .dropdown-content {
+        display: none;
+        border: solid;
+    }
+    
+    .filter-button {
+        margin: 5px;
+        padding: 8px 12px;
+        background-color: #FAF1E5;
+        color: black;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        
+    }
+
+    
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.7);
+        bottom: 0;
+    }
+    .modal-content {
+        position: relative;
+        margin: 10% auto;
+        width: 90%;
+        height: 70%;
+        max-width: 1000px;
+        background-color: #fefefe;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        bottom: 0;
+    }
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #aaa;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    #live-video {
+        width: 90%;
+        height: 90%;
+        border-radius: 5px;
+        position: absolute;
+        bottom: 0;
+    }
+    #channels-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
     .tabcontent {
       animation: fadeEffect 1s;
       /* Fading effect takes 1 second */
@@ -33,15 +208,32 @@
     }
 
     .tab {
-      overflow: hidden;
+      overflow-x: scroll;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
       margin-right: 30px;
       margin-left: 30px;
       width: 100%;
       display: flex;
       justify-content: center;
+      align-items: center;
     }
 
-    /* Style the buttons that are used to open the tab content */
+    @media screen and (max-width: 768px) {
+      .tab {
+       justify-content: left;
+       margin-left: 0;
+      }
+    }
+
+
+    @media screen and (max-width: 480px) {
+      .card {
+       margin-left: 0;
+      }
+    }
+
+  
     .tab button {
       background-color: #FAF1E5;
       float: left;
@@ -113,15 +305,16 @@
       position: relative;
       top: 0;
       left: 0;
-     
-     
       background-color: #FAF1E5;
-      
       width: calc(10% - 20px);
-      
       border-radius: 15px;
     }
 
+    .tab1:scroll{
+      transform: translateX(-10%);
+      display: flex;
+    }
+    
   
     @media screen and (max-width: 768px) {
       .tab1 {
@@ -432,16 +625,18 @@
     }
     #logo {
       position: absolute;
-      
-      left: 0.7px;
+      left: 0px;
       width: 120px;
       height: 40px;
     }
   </style>
+  
+  <link href="https://vjs.zencdn.net/7.11.4/video-js.min.css" rel="stylesheet">
 </head>
 
 <body>
   <header>
+    
 
     <img src="https://noahabebe.github.io/Nexus/nexus.png" id="logo" alt="Logo"  ></img>
    
@@ -457,11 +652,12 @@
     </div>
 
     <div style="border: none;" class="tab">
-      <button class="tablinks" onclick="openTab(event, 'for-you')" id="defaultOpen"><i class="fa fa-home"></i> </br>
+      <button class="tablinks" onclick="openTab(event, 'for-you')" id="defaultOpen"><i class="fa fa-newspaper"></i> </br>
         For You</button>
-      <button class="tablinks" onclick="openTab(event, 'categories')"><i class="fa fa-home"></i> </br>
+      <button class="tablinks" onclick="openTab(event, 'categories')"><i class="fa fa-layer-group"></i> </br>
         Categories</button>
-      <button class="tablinks" onclick="openTab(event, 'Tokyo')"><i class="fa fa-home"></i> </br> Tokyo</button>
+      <button class="tablinks" onclick="openTab(event, 'video')"><i class="fa fa-play"></i> </br> Live Channels</button>
+      <button class="tablinks" onclick="openTab(event, 'radio')"><i class="fa fa-radio"></i>  </br> Radio </button>
 
     </div>
 
@@ -520,9 +716,66 @@
        
       </div>
 
-      <div id="Tokyo" class="tabcontent">
-        <h3>Tokyo</h3>
-        <p>Tokyo is the capital of Japan.</p>
+      <div id="video" class="tabcontent">
+        <h3>Live Stream Channels</h3>
+        <div class="dropdown">
+            <button class="filter-button">Filter by Region</button>
+            <div class="dropdown-content">
+                <div onclick="filterByRegion('Africa')">Africa</div>
+                <div onclick="filterByRegion('Americas')">Americas</div>
+                <div onclick="filterByRegion('Arab world')">Arab world</div>
+                <div onclick="filterByRegion('Asia')">Asia</div>
+                <div onclick="filterByRegion('Asia-Pacific')">Asia-Pacific</div>
+                <div onclick="filterByRegion('Association of Southeast Asian Nations')">Association of Southeast Asian Nations</div>
+                <div onclick="filterByRegion('Balkan')">Balkan</div>
+                <div onclick="filterByRegion('Benelux')">Benelux</div>
+                <div onclick="filterByRegion('Caribbean')">Caribbean</div>
+                <div onclick="filterByRegion('Central America')">Central America</div>
+                <div onclick="filterByRegion('Central and Eastern Europe')">Central and Eastern Europe</div>
+                <div onclick="filterByRegion('Central Asia')">Central Asia</div>
+                <div onclick="filterByRegion('Commonwealth of Independent States')">Commonwealth of Independent States</div>
+                <div onclick="filterByRegion('Europe')">Europe</div>
+                <div onclick="filterByRegion('Europe, the Middle East and Africa')">Europe, the Middle East and Africa</div>
+                <div onclick="filterByRegion('European Union')">European Union</div>
+                <div onclick="filterByRegion('Hispanic America')">Hispanic America</div>
+                <div onclick="filterByRegion('Latin America')">Latin America</div>
+                <div onclick="filterByRegion('Latin America and the Caribbean')">Latin America and the Caribbean</div>
+                <div onclick="filterByRegion('Maghreb')">Maghreb</div>
+                <div onclick="filterByRegion('Middle East')">Middle East</div>
+                <div onclick="filterByRegion('Middle East and North Africa')">Middle East and North Africa</div>
+                <div onclick="filterByRegion('Nordics')">Nordics</div>
+                <div onclick="filterByRegion('North America')">North America</div>
+                <div onclick="filterByRegion('Northern America')">Northern America</div>
+                <div onclick="filterByRegion('Northern Europe')">Northern Europe</div>
+                <div onclick="filterByRegion('Oceania')">Oceania</div>
+                <div onclick="filterByRegion('South America')">South America</div>
+                <div onclick="filterByRegion('South Asia')">South Asia</div>
+                <div onclick="filterByRegion('Southeast Asia')">Southeast Asia</div>
+                <div onclick="filterByRegion('Southern Europe')">Southern Europe</div>
+                <div onclick="filterByRegion('Sub-Saharan Africa')">Sub-Saharan Africa</div>
+                <div onclick="filterByRegion('West Africa')">West Africa</div>
+                <div onclick="filterByRegion('Western Europe')">Western Europe</div>
+            </div>
+        </div>
+        
+        <div id="channels-container"></div>
+
+        <div id="video-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <video id="live-video" class="video-js vjs-default-skin" controls preload="auto" width="100%" height="70%" data-setup="{}">
+                    <p class="vjs-no-js">
+                        To view this video please enable JavaScript, and consider upgrading to a
+                        web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                    </p>
+                </video>
+            </div>
+        </div>
+
+         <div id="radio" class="tabcontent">
+
+
+         </div>
       </div>
     
   </main>
@@ -531,8 +784,139 @@
 
   
 
-
+  <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
   <script>
+    
+    let allChannels = [];
+   
+
+    // Function to parse channels from the data
+    function parseChannels(data) {
+        const channels = [];
+        const lines = data.split('\n');
+        let channel = null;
+        lines.forEach(line => {
+            if (line.startsWith('#EXTINF:')) {
+                // Extract channel information
+                const info = line.split(',');
+                const name = info[1];
+                const url = lines[lines.indexOf(line) + 1];
+                const logoMatch = line.match(/tvg-logo="([^"]*)"/);
+                const logo = logoMatch ? logoMatch[1] : 'default_logo.png'; // Default logo if not available
+                const regionMatch = line.match(/region="([^"]*)"/);
+                const region = regionMatch ? regionMatch[1] : '';
+                channel = {
+                    name,
+                    url,
+                    logo,
+                    region
+                };
+                channels.push(channel);
+            }
+        });
+        return channels;
+    }
+    
+    const regionSuffixMap = {
+        'Africa': 'afr.m3u',
+        'Americas': 'amer.m3u',
+        'Arab world': 'arab.m3u',
+        'Asia': 'asia.m3u',
+        'Asia-Pacific': 'apac.m3u',
+        'Association of Southeast Asian Nations': 'asean.m3u',
+        'Balkan': 'balkan.m3u',
+        'Benelux': 'benelux.m3u',
+        'Caribbean': 'carib.m3u',
+        'Central America': 'cenamer.m3u',
+        'Central and Eastern Europe': 'cee.m3u',
+        'Central Asia': 'cas.m3u',
+        'Commonwealth of Independent States': 'cis.m3u',
+        'Europe': 'eur.m3u',
+        'Europe, the Middle East and Africa': 'emea.m3u',
+        'European Union': 'eu.m3u',
+        'Hispanic America': 'hispam.m3u',
+        'Latin America': 'latam.m3u',
+        'Latin America and the Caribbean': 'lac.m3u',
+        'Maghreb': 'maghreb.m3u',
+        'Middle East': 'mideast.m3u',
+        'Middle East and North Africa': 'mena.m3u',
+        'Nordics': 'nord.m3u',
+        'North America': 'noram.m3u',
+        'Northern America': 'nam.m3u',
+        'Northern Europe': 'neur.m3u',
+        'Oceania': 'oce.m3u',
+        'South America': 'southam.m3u',
+        'South Asia': 'sas.m3u',
+        'Southeast Asia': 'sea.m3u',
+        'Southern Europe': 'ser.m3u',
+        'Sub-Saharan Africa': 'ssa.m3u',
+        'West Africa': 'wafr.m3u',
+        'Western Europe': 'wer.m3u'
+    };
+
+    window.addEventListener('load', filterByRegion('Northern America'))
+    // Function to fetch channels based on the selected region
+    function filterByRegion(region) {
+        const endpointSuffix = regionSuffixMap[region];
+        if (endpointSuffix) {
+            fetch(`https://iptv-org.github.io/iptv/regions/${endpointSuffix}`)
+                .then(response => response.text())
+                .then(data => {
+                    allChannels = parseChannels(data);
+                    displayChannels(allChannels);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        } else {
+            console.error('Invalid region:', region);
+        }
+    }
+
+    // Function to display channels
+    function displayChannels(channels) {
+        const channelsContainer = document.getElementById('channels-container');
+        channelsContainer.innerHTML = ''; // Clear previous channels
+        channels.forEach(channel => {
+            const card = document.createElement('play-card');
+            card.classList.add('play-card');
+            card.innerHTML = `
+            <a href="#" class="play-card" onclick="playChannel('${channel.url}')">
+              <img src="${channel.logo}"  alt="${channel.name}" class="card__img">
+              <span class="card__footer">
+                <span>${channel.name}</span>
+              </span>
+              <span class="card__action">
+                <svg viewBox="0 0 448 512" title="play">
+                  <path d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z" />
+                </svg>
+              </span>
+            </a> <br> <br>
+            `;
+            channelsContainer.appendChild(card);
+        });
+    }
+
+    // Function to play the selected channel
+    function playChannel(url) {
+        const video = videojs('live-video');
+        video.src({
+            src: url,
+            type: 'application/x-mpegURL'
+        });
+        openModal();
+    }
+
+    // Function to open the modal
+    function openModal() {
+        document.getElementById('video-modal').style.display = 'block';
+    }
+
+    // Function to close the modal
+    function closeModal() {
+        const video = videojs('live-video');
+        video.pause();
+        document.getElementById('video-modal').style.display = 'none';
+    }
+   
     // Function to fetch news data
     async function fetchNewsData() {
       try {
