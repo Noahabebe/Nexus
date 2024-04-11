@@ -25,7 +25,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/NewsArticle'
+                  $ref: '#/news_data.json'
   /live-channels:
     get:
       summary: Get live channels
@@ -63,6 +63,8 @@ paths:
             application/json:
               schema:
                 type: object
+                items:
+                  $ref: '#/countries.json'
   /news-data:
     get:
       summary: Get news data
