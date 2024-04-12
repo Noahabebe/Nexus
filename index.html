@@ -6,13 +6,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   
   
   <title>The Nexus: NewsCenter</title>
 
   <style>
-   
+   #audioPlayer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      transform: translateY(340%);
+   }
     #video {
       box-sizing: border-box;
       display: grid;
@@ -56,6 +61,7 @@
       background: hsl(0 0% 100% / 0.5);
       backdrop-filter: blur(var(--blur));
       height: 30%;
+      background-size: cover;
       align-content: center;
     }
 
@@ -168,15 +174,30 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         bottom: 0;
     }
-    .close {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        color: #aaa;
-        font-size: 20px;
-        font-weight: bold;
-        cursor: pointer;
+    /* Modal Content */
+    .iframe-container {
+      background-color: #fefefe;
+      margin: 10% auto; /* 10% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%; /* Could be more or less, depending on screen size */
     }
+
+    /* Close Button */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    
     #live-video {
         width: 90%;
         height: 90%;
@@ -228,7 +249,7 @@
 
 
     @media screen and (max-width: 480px) {
-      .card {
+      .tab {
        margin-left: 0;
       }
     }
@@ -297,38 +318,33 @@
       border-radius: 15px;
       flex-direction: row; /* Changed direction to row */
       overflow-x: none;
+      overflow-y: auto;
       height: calc(auto - 10px);
       position: relative;
     }
 
-    .tab1  {
-      position: relative;
-      top: 0;
-      left: 0;
+    .tab1 {
+      position: fixed;
+      top: 35%; /* Adjust top position as needed */
+      left: 50px; /* Adjust left position as needed */
       background-color: #FAF1E5;
-      width: calc(10% - 20px);
+      width: calc(25% - 20px);
       border-radius: 15px;
+      transition: transform 0.3s ease; /* Smooth transition for animation */
+      display: flex;
+      align-items: center;
+      margin-right: 14%;
+     
+      z-index: 1000; /* Ensure it's above other content */
+      transform: translateX(-120%);
     }
 
-    .tab1:scroll{
-      transform: translateX(-10%);
-      display: flex;
+    .tab1.hidden {
+      transform: translateX(.1%); 
     }
+
     
   
-    @media screen and (max-width: 768px) {
-      .tab1 {
-        
-        width: calc(30% - 20px); /* Adjust width for smaller screens */
-      }
-    }
-
-    @media screen and (max-width: 480px) {
-      .tab1 {
-        
-        width: calc(35% - 20px); /* Adjust width for even smaller screens */
-      }
-    }
 
     .tab1 button {
       display: block;
@@ -350,45 +366,20 @@
 
 
     .tabcontent1 {
-      
+      float: right;
       width: 70%; /* Adjust width as needed */
       height: 100%; 
       text-align: left;
-      
+      overflow-y: none;
+      overflow-x: none;
       border-radius: 15px;
-      position: absolute;
-      top: 0;
-      right: 0;
-     
+      justify-content: right;
+      margin-left: 5%;
     }
+    
 
     
-    @media screen and (max-width: 768px) {
-      .tabcontent1 {
-       
-        width: 70%; /* Adjust width for smaller screens */
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        top: 0;
-        right: 0;
-        height: 70%;/* Adjust width for smaller screens */
-      }
-    }
-
-    @media screen and (max-width: 480px) {
-      .tabcontent1 {
-        width: 70%; /* Adjust width for smaller screens */
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        top: 0;
-        right: 0;
-        height: 70%;
-       
-       
-      }
-    }
+    
 
     .tab1 button.active {
       border-bottom: .4px solid black;
@@ -466,7 +457,6 @@
      
     }
     .cards {
-      
       display: flex;
       flex-direction: column;
       background-color: whitesmoke;
@@ -485,6 +475,8 @@
       width: 100%;
       -webkit-order: 2;
       order: 2;
+      cursor: pointer;
+      
     }
 
     #headlines {
@@ -492,9 +484,7 @@
        flex-direction: column;
        justify-content: center;
        flex-wrap: nowrap; /* Ensure cards do not wrap to the next line */
-       overflow-x: none; /* Enable horizontal scrolling for the card container */
-       overflow-y: none; /* Disable vertical scrolling for the card container */
-       
+       overflow: none;
        justify-content: left;
        scrollbar-width: none;
        -ms-overflow-style: none;
@@ -504,7 +494,7 @@
     #top{
       -webkit-order: 2;
       order: 2;
-      overflow-x: none;
+      overflow: none;
       position: absolute; /* Set position to absolute */
       top: 0; /* Align to the top */
       width: 10px; 
@@ -513,7 +503,10 @@
       flex-direction: column;
       justify-content: center;
     }
-    
+
+    #categories {
+      overflow: none;
+    }
 
     .card {
       display: flex;
@@ -530,6 +523,7 @@
       margin-right: 10px;
       margin-left: auto; /* Allow flex-grow and flex-shrink */
       flex: 1 1 auto;
+      cursor: pointer;
       
     }
 
@@ -613,8 +607,8 @@
       width: 20px;
       background-color: #ccc;
       border-radius: 15px;
-      cursor: pointer;
-      z-index: 1000;
+      
+      
     }
 
     select option {
@@ -680,6 +674,11 @@
    
       <div id="for-you"  class="tabcontent">
 
+        <div id="myModal" class="modal">
+          <span class="close">&times;</span>
+          <div id="iframeContainer" class="iframe-container"></div>
+        </div>
+
         
         
         <section id="cardContainer">
@@ -697,8 +696,12 @@
 
         <footer style="order: 3;">
           <img src="https://noahabebe.github.io/Nexus/nexus.png" id="logo" alt="Logo"  ></img>
-          <p>Footer content goes here</p>
+          <div class="fa"><p>Made with </p></div>
 
+          <div class="fa fa-heart"></div>
+            
+          <div class="fa"><p>in Toronto</p></div> 
+           
         </footer>
       </div>
 
@@ -707,13 +710,6 @@
         <div id="tab1" class="tab1" >
           
         </div>
-
-
-        
-
-        
-
-       
       </div>
 
       <div id="video" class="tabcontent">
@@ -757,7 +753,6 @@
                 <div onclick="filterByRegion('Western Europe')">Western Europe</div>
             </div>
         </div>
-        
         <div id="channels-container"></div>
 
         <div id="video-modal" class="modal">
@@ -771,12 +766,20 @@
                 </video>
             </div>
         </div>
+      </div>
+        
 
          <div id="radio" class="tabcontent">
-
-
+           <div id="radioStations">
+             
+           </div>
+           <audio id="audioPlayer" controls>
+             <!-- Audio player controls -->
+             Your browser does not support the audio element.
+           </audio>
          </div>
-      </div>
+        
+      
     
   </main>
 
@@ -786,6 +789,138 @@
 
   <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
   <script>
+    const countryMapping = {
+      'us': 'United States',
+      'au': 'Australia',
+      'no': 'Norway',
+      'it': 'Italy',
+      'sa': 'Saudi Arabia',
+      'pk': 'Pakistan',
+      'gb': 'United Kingdom',
+      'de': 'Germany',
+      'br': 'Brazil',
+      'ca': 'Canada',
+      'es': 'Spain',
+      'ar': 'Argentina',
+      'fr': 'France',
+      'in': 'India',
+      'is': 'Iceland',
+      'ru': 'Russia',
+      'se': 'Sweden',
+      'za': 'South Africa',
+      'ie': 'Ireland',
+      'nl': 'Netherlands',
+      'zh': 'China'
+    };
+
+    document.getElementById('countrySelect').addEventListener('change', function() {
+        const countryCode = this.value.toUpperCase() || countryMapping[this.value.toUpperCase()];
+        fetchRadioStations(countryCode);
+      });
+
+      
+      function fetchRadioStations(country) {
+        let url = `https://nl1.api.radio-browser.info/json/stations/search?limit=10&countrycode=${country}`;
+
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            displayRadioStations(data);
+          })
+          .catch(error => console.error(error));
+      }
+
+    function displayRadioStations(stations) {
+      const radioStationsContainer = document.getElementById('radioStations');
+      radioStationsContainer.innerHTML = ''; // Clear previous stations
+
+      for(let i = 0; i < stations.length; i++) {
+        const station = stations[i];
+        console.log(station);
+        const stationName = station.name;
+        const stationUrl = station.url;
+        const stationImg = station.favicon;
+        
+        const cards = document.createElement('div');
+        cards.classList.add('play-card');
+
+          cards.innerHTML = `<br> <br> <br> <a href="#" class="play-card" onclick="playRadio('${stationUrl}')">
+              <img src="${stationImg}"  alt="${stationName}" class="card__img">
+              <span class="card__footer">
+                <span>${stationName}</span>
+              </span>
+              <span class="card__action">
+
+              </span>
+            </a> <br> <br> <br>`;
+
+          
+
+          radioStationsContainer.appendChild(cards);
+        }
+      }
+      
+     
+      
+    function playRadio(url) {
+      const audioPlayer = document.getElementById('audioPlayer');
+      audioPlayer.src = url;
+      audioPlayer.play();
+    }
+
+
+    
+    const cards = document.querySelectorAll('.cards');
+    const modal = document.getElementById('myModal');
+    const iframeContainer = document.getElementById('iframeContainer');
+    const closeBtn = document.getElementsByClassName('close')[0];
+
+    // Open modal when a card is clicked
+    cards.forEach(card => {
+      card.addEventListener('click', function () {
+        const selectedCountry = document.getElementById('countrySelect').value.toLowerCase();
+        const articles = articlesByCountry[selectedCountry];
+        const articleIndex = index; // Assuming you have a data-index attribute in your HTML
+
+        if (articles && articles.length > articleIndex) {
+          const articleUrl = articles[articleIndex].url;
+          const iframe = document.createElement('iframe');
+          iframe.setAttribute('src', articleUrl);
+          iframe.style.width = '100%';
+          iframe.style.height = '80vh'; // Adjust height as needed
+
+          iframeContainer.innerHTML = ''; // Clear previous content
+          iframeContainer.appendChild(iframe);
+
+          modal.style.display = 'block';
+        }
+      });
+    });
+
+    // Close modal when close button is clicked
+    closeBtn.addEventListener('click', function () {
+      modal.style.display = 'none';
+    });
+
+    // Close modal when clicking outside of it
+    window.addEventListener('click', function (event) {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    });
+    
+   window.addEventListener('scroll', function() {
+      var tab1 = document.querySelector('.tab1');
+      
+      if (window.scrollY > 0) {
+        tab1.classList.add('hidden');
+      } else {
+        tab1.classList.remove('hidden');
+      }
+     
+    });
+
     
     let allChannels = [];
    
@@ -905,19 +1040,19 @@
         openModal();
     }
 
-    // Function to open the modal
+    
     function openModal() {
         document.getElementById('video-modal').style.display = 'block';
     }
 
-    // Function to close the modal
+   
     function closeModal() {
         const video = videojs('live-video');
         video.pause();
         document.getElementById('video-modal').style.display = 'none';
     }
    
-    // Function to fetch news data
+   
     async function fetchNewsData() {
       try {
         const response = await fetch('https://noahabebe.github.io/Nexus/news_data.json');
@@ -929,7 +1064,7 @@
       }
     }
 
-    // Function to populate countries in the dropdown
+    
     async function populateCountriesDropdown() {
       try {
         const newsData = await fetchNewsData();
@@ -946,7 +1081,7 @@
       }
     }
 
-    // Function to populate categories in tab1 based on the selected country
+   
     async function populateCategories(selectedCountry) {
       try {
         
@@ -1007,11 +1142,10 @@
       // Get the 'tab1' element, or create it if it doesn't exist
       var tab1 = document.getElementById('tab1') || createTab1();
 
-      // Clear the categoriesContainer's content
+     
       var categoriesContainer = document.getElementById('categories');
       categoriesContainer.innerHTML = '';
-
-      // Append 'tab1' to categoriesContainer if it's not already there
+     
       if (!document.getElementById('tab1')) {
         categoriesContainer.appendChild(tab1);
       }
@@ -1023,9 +1157,7 @@
       
       // Create a new div element for the tab content
       const tabcontent1 = document.createElement("div");
-      tabcontent1.className = "tabcontent1"; // Add a class name to the tab content div
-
-      // Use map to iterate over articles and create the HTML structure
+      tabcontent1.className = "tabcontent1"; 
       tabcontent1.innerHTML = articles.map(article => `
         <div class="cards" style="width: 100%; height: 300px;">
           <h2>${article.title}</h2>
@@ -1033,6 +1165,7 @@
           <p>Published: ${article.publishedAt}</p>
         </div>
       `).join('');
+      tabcontent1.style.overflowY = 'none';
 
       // Append the new tab content to the container
       categoriesContainer.appendChild(tabcontent1);
@@ -1069,8 +1202,8 @@
         });
 
         const firstOption = countrySelect.querySelector('option');
-        firstOption.selected = true; // Select the first option
-        const clickEvent = new Event('change'); // Create a new click event
+        firstOption.selected = true; 
+        const clickEvent = new Event('change'); 
         countrySelect.dispatchEvent(clickEvent);
         
       } catch (error) {
@@ -1078,7 +1211,7 @@
       }
     }
 
-    // Call initializePage function when the page loads
+   
     initializePage();
 
     
@@ -1108,64 +1241,96 @@
         displayHeadlines(selectedCountry);
     }
 
-    async function displayHeadlines(selectedCountry) {
+      async function displayHeadlines(selectedCountry) {
         const headlinesSection = document.getElementById('headlines');
-        headlinesSection.innerHTML = '<h1> Ranking Headlines for ' + selectedCountry.toUpperCase() + '<h1>'; // Clear existing headlines
+        headlinesSection.innerHTML = '<h1> Ranking Headlines for ' + selectedCountry.toUpperCase() + '</h1>'; // Close h1 tag properly
 
         const articles = articlesByCountry[selectedCountry];
         const container = document.createElement('div');
         container.classList.add('card-container');
-        
-        
+
         // Rank articles based on your desired criteria
         const rankedArticles = rankArticles(articles);
 
         rankedArticles.forEach((article, index) => {
-            const articleDiv = document.createElement('div');
-            articleDiv.classList.add('cards');
-           
-            articleDiv.style.width = '100%';
-            articleDiv.style.height = 'auto';
-            articleDiv.style.display = 'flex'
-            articleDiv.style.order = '2';
-            // Add ranking indicator (optional)
-            const rank = document.createElement('span');
-            rank.textContent = `${index + 1}`; // 1-based ranking
-            rank.style.fontWeight = 'bold';
-            rank.style.fontFamily = 'Arial';
-            rank.classList.add('rank');
-            articleDiv.appendChild(rank);
+          const articleDiv = document.createElement('div');
+          articleDiv.classList.add('cards');
 
-            const cardContent = document.createElement('div');
-            cardContent.classList.add('card-content');
+          articleDiv.style.width = '100%';
+          articleDiv.style.height = 'auto';
+          articleDiv.style.display = 'flex';
+          articleDiv.style.order = '2';
 
-           
-            const logoImg = document.createElement('img');
-            logoImg.src = article.urlToImage;
-            logoImg.alt = article.source.name;
-            logoImg.style.width = '100%';
-            logoImg.style.height = '80px';
-            logoImg.style.objectFit = 'cover';
-            logoImg.style.borderRadius = '15%';
-            logoImg.style.marginBottom = '10px';
-            cardContent.appendChild(logoImg);
+          // Add ranking indicator (optional)
+          const rank = document.createElement('span');
+          rank.textContent = `${index + 1}`; // 1-based ranking
+          rank.style.fontWeight = 'bold';
+          rank.style.fontFamily = 'Arial';
+          rank.classList.add('rank');
+          articleDiv.appendChild(rank);
 
-            const title = document.createElement('h3');
-            title.textContent = article.title;
-            cardContent.appendChild(title);
+          const cardContent = document.createElement('div');
+          cardContent.classList.add('card-content');
 
-            articleDiv.appendChild(cardContent);
-            container.appendChild(articleDiv);
+          const logoImg = document.createElement('img');
+          logoImg.src = article.urlToImage;
+          logoImg.alt = article.source.name;
+          logoImg.style.width = '100%';
+          logoImg.style.height = '80px';
+          logoImg.style.objectFit = 'cover';
+          logoImg.style.borderRadius = '15%';
+          logoImg.style.marginBottom = '10px';
+          cardContent.appendChild(logoImg);
+
+          const title = document.createElement('h3');
+          title.textContent = article.title;
+          cardContent.appendChild(title);
+
+          articleDiv.appendChild(cardContent);
+          container.appendChild(articleDiv);
+
+          // Open modal when a card is clicked
+          articleDiv.addEventListener('click', function () {
+            openModal1(article.url);
+          });
         });
 
         headlinesSection.appendChild(container);
-    }
+      }
 
-    function rankArticles(articles) {
+      function openModal1(articleUrl) {
+        const modal = document.getElementById('myModal');
+        const iframeContainer = document.getElementById('iframeContainer');
+        const closeBtn = document.getElementsByClassName('close')[0];
+
+        const iframe = document.createElement('iframe');
+        iframe.setAttribute('src', articleUrl);
+        iframe.style.width = '100%';
+        iframe.style.height = '80vh'; // Adjust height as needed
+
+        iframeContainer.innerHTML = ''; // Clear previous content
+        iframeContainer.appendChild(iframe);
+
+        modal.style.display = 'block';
+
+        // Close modal when close button is clicked
+        closeBtn.addEventListener('click', function () {
+          modal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside of it
+        window.addEventListener('click', function (event) {
+          if (event.target == modal) {
+            modal.style.display = 'none';
+          }
+        });
+      }
+
+      function rankArticles(articles) {
         // Replace this with your actual ranking logic
         // For example, to rank by published date (most recent first):
         return articles.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-    }
+      }
 
 
    
@@ -1286,7 +1451,7 @@
 
         card.addEventListener('click', function () {
           // Construct the URL for the detailed info page
-          const routeUrl = 'sources.html?source=' + encodeURIComponent(sourceName);
+          const routeUrl = 'source.html?source=' + encodeURIComponent(sourceName);
           // Redirect to the detailed info page
           window.location.href = routeUrl;
         });
