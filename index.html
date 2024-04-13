@@ -132,7 +132,7 @@
       --blur: 16px;
       --size: clamp(300px, 50vmin, 600px);
       width: var(--size);
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 1;
       position: relative;
       border-radius: 2rem;
       overflow: hidden;
@@ -1015,22 +1015,40 @@ let allRadioStationsByCountry ={} ;    document.getElementById('countrySelect').
         const stationName = station.name;
         const stationUrl = station.url;
         const stationImg = station.favicon;
+
+        
         
         const cards = document.createElement('play-card1');
         cards.classList.add('play-card1');
         cards.classList.add('searchable');
+        if(!stationImg){
+          cards.innerHTML = `
 
+          <a href="#" class="play-card1" onclick="playRadio('${stationUrl}')">
+            <img src="https://noahabebe.github.io/Nexus/nexus.png"  alt="${stationName}" class="card__img1">
+            <span class="card__footer1">
+              <span>${stationName}</span>
+            </span>
+            <span class="card__action1">
+              <svg viewBox="0 0 448 512" title="play">
+                <path d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z" />
+              </svg>
+            </span>
+          </a> <br> <br`;
+        } else {
           cards.innerHTML = `<a href="#" class="play-card1" onclick="playRadio('${stationUrl}')">
-              <img src="${stationImg}"  alt="${stationName}" class="card__img1">
-              <span class="card__footer1">
-                <span>${stationName}</span>
-              </span>
-              <span class="card__action1">
-                <svg viewBox="0 0 448 512" title="play">
-                  <path d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z" />
-                </svg>
-              </span>
-            </a>   `;
+            <img src="${stationImg}"  alt="${stationName}" class="card__img1">
+            <span class="card__footer1">
+              <span>${stationName}</span>
+            </span>
+            <span class="card__action1">
+              <svg viewBox="0 0 448 512" title="play">
+                <path d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z" />
+              </svg>
+            </span>
+          </a> <br> <br>  `;
+        }
+         
 
           
 
