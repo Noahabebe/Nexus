@@ -18,6 +18,13 @@
       left: 0;
       transform: translateY(340%);
    }
+    #radio{
+      box-sizing: border-box;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
     #video {
       box-sizing: border-box;
       display: grid;
@@ -104,7 +111,88 @@
       --hover: 1;
     }
    
+    .play-card1 {
+      --blur: 16px;
+      --size: clamp(300px, 50vmin, 600px);
+      width: var(--size);
+      aspect-ratio: 4 / 3;
+      position: relative;
+      border-radius: 2rem;
+      overflow: hidden;
+      color: #000;
+      margin-right: .4rem;
+      margin-top: .9rem;
+      transform: translateZ(0);
+      background-color: #FAF1E5;
+      background-image: url('https://noahabebe.github.io/Nexus/nexus.png');
+    }
+
+    .card__img1 {
+      width: 300px;
+      height: 300px;
+      background-color: #FAF1E5;
+      transform: scale(calc(1 + (var(--hover, 0) * 0.25))) rotate(calc(var(--hover, 0) * -5deg));
+      transition: transform 0.2s;
+      border-radius: 15px;
+    }
+
+    .card__footer1 {
+      padding: 0 1.5rem;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: red;
+      display: grid;
+      grid-template-row: auto auto;
+      gap: 0.5ch;
+      background: hsl(0 0% 100% / 0.5);
+      backdrop-filter: blur(var(--blur));
+      height: 100%;
+      align-content: center;
+    }
+
+    .card__action1 {
+      position: absolute;
+        aspect-ratio: 1;
+        width: calc(var(--size) * 0.15);
+        bottom: 30%;
+        right: 1.5rem;
+        transform: translateY(50%)
+          translateY(
+            calc(
+              (var(--size) * 0.4)
+            )
+          )
+          translateY(calc(var(--hover, 0) * (var(--size) * -0.4)));
+        background: purple;
+        display: grid;
+        place-items: center;
+        border-radius: 0.5rem;
+        background: hsl(0 0% 100% / 0.5);
+      /*   backdrop-filter: blur(calc(var(--blur) * 0.5)); */
+        transition: transform 0.2s;
+    }
+
     
+    .card__action1 svg {
+      aspect-ratio: 1;
+      width: 50%;
+    }
+
+    .card__footer1 span:nth-of-type(1) {
+      font-size: calc(var(--size) * 0.065);
+    }
+
+    .card__footer1 span:nth-of-type(2) {
+      font-size: calc(var(--size) * 0.035);
+    }
+
+    .play-card1:is(:hover, :focus-visible) {
+      --hover: 1;
+    }
+
+
     .dropdown {
         position: relative;
         display: inline-block;
@@ -820,12 +908,11 @@
 
       
       function fetchRadioStations(country) {
-        let url = `https://nl1.api.radio-browser.info/json/stations/search?limit=10&countrycode=${country}`;
+        let url = `https://nl1.api.radio-browser.info/json/stations/search?countrycode=${country}`;
 
         fetch(url)
           .then(response => response.json())
           .then(data => {
-            console.log(data);
             displayRadioStations(data);
           })
           .catch(error => console.error(error));
@@ -842,18 +929,20 @@
         const stationUrl = station.url;
         const stationImg = station.favicon;
         
-        const cards = document.createElement('div');
-        cards.classList.add('play-card');
+        const cards = document.createElement('play-card1');
+        cards.classList.add('play-card1');
 
-          cards.innerHTML = `<br> <br> <br> <a href="#" class="play-card" onclick="playRadio('${stationUrl}')">
-              <img src="${stationImg}"  alt="${stationName}" class="card__img">
-              <span class="card__footer">
+          cards.innerHTML = `<a href="#" class="play-card1" onclick="playRadio('${stationUrl}')">
+              <img src="${stationImg}"  alt="${stationName}" class="card__img1">
+              <span class="card__footer1">
                 <span>${stationName}</span>
               </span>
-              <span class="card__action">
-
+              <span class="card__action1">
+                <svg viewBox="0 0 448 512" title="play">
+                  <path d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z" />
+                </svg>
               </span>
-            </a> <br> <br> <br>`;
+            </a>   `;
 
           
 
