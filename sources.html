@@ -8,7 +8,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-  <title>The Nexus: NewsCenter</title>
+  <title>Nexus: News Center</title>
 
   <style>
    
@@ -112,12 +112,14 @@
       margin-bottom: 10px;
     }
 
-    /* Import Google Font */
-    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
 
     /* Apply the font family to the body */
     body {
-      font-family: 'Roboto', sans-serif;
+      font-family: "Roboto Condensed", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: <weight>;
+      font-style: normal;
 
     }
 
@@ -138,37 +140,39 @@
       display: flex;
       flex-direction: row;
       background-color: whitesmoke;
-      width: calc(100% - 55px);
-      max-width: 100%;
-      min-width: 500px;
+      width: 91%;
+      margin-right: 30%;
+      max-width: 91%;
+      min-width: 91%;
       max-height: 200px;
       height: 500px;
       padding: 20px;
       color: black;
       border-radius: 30px;
       background-size: cover;
-      margin: 10px;
-      
-      
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
+
+    
 
     .top-headlines img {
       width: 30%;
       height: auto;
-      margin-right: 50px;
+      margin-right: 10px;
       border-radius: 15px;
     }
 
-    .top-headlines h4 {
+    .top-headlines h5 {
       margin-top: 10px;
       font-size: 18px;
       font-weight: bold;
+      text-align: left;
+      justify-content: left;
     }
 
     .cards {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       background-color: whitesmoke;
       width: calc(25% - 20px);
       max-width: 400px;
@@ -243,6 +247,10 @@
       z-index: 1000;
     }
 
+    section {
+      font-family: 'Roboto';
+    }
+
     
   </style>
 </head>
@@ -255,8 +263,8 @@
     <h1 id="source-name"></h1>
     <nav>
       <ul>
-        <li><a href="#"><i class="fa fa-home"></i><span>Home</span></a></li>
-        <li><a href="#"><i class="fa fa-shopping-cart"></i><span>Shop</span></a></li>
+        <li><a href="index.html"><i class="fa fa-home"></i><span>Home</span></a></li>
+        <li><a href="terms.html"><i class="fa fa-shield-halved"></i><span>Privacy & Policy (Terms & Condition) </span></a></li>
         <li><a href="#"><i class="fa fa-user"></i><span>Account</span></a></li>
         <li><a href="#"><i class="fa fa-info-circle"></i><span>About</span></a></li>
       </ul>
@@ -264,7 +272,6 @@
     <!-- Shelf icon for side navigation -->
     <div id="shelf-icon"><i class="fa fa-bars fa-2x"></i></div>
   </header>
-
 
   
     <main>
@@ -274,13 +281,26 @@
         <h3>Top Headlines</h3>
         <div class="top-headlines" id="top-headlines-container">
           <img id="top-headline-image" src="" alt="">
-          <h4 id="top-headline-title"></h4>
+          <h5 id="top-headline-title"></h5>
         </div>
         <h3>Articles</h3>
         <div class="card-container" id="article-list"></div>
       </div>
+      
     </main>
+  
+  <footer style="order: 3;">
+    <img src="https://noahabebe.github.io/Nexus/nexus.png" id="logo" alt="Logo"  ></img>
+    <br>
+    <p>&copy; 2024 Nexus: News Center. All rights reserved.</p>
+    <div class="fa"><p>Made with </p></div>
 
+    <div class="fa fa-heart"></div>
+
+    <div class="fa"><p>in Toronto</p></div> 
+
+  </footer>
+  
     <script>
       document.addEventListener('DOMContentLoaded', async function () {
         async function fetchNews() {
