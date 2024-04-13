@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   
   
-  <title>The Nexus: NewsCenter</title>
+  <title>Nexus: News Center</title>
 
   <style>
     #searchResults {
@@ -391,18 +391,6 @@
       order: 1;
     }
 
-    .line {
-      width: 100%;
-      text-align: center;
-      margin-top: 20px;
-      margin-bottom: 20px; 
-    }
-
-    .line hr {
-      border: 10px solid #ccc; 
-      width: 90%;
-    }
-
 
    
    
@@ -768,8 +756,8 @@
 
     <nav>
       <ul>
-        <li><a href="#"><i class="fa fa-home"></i><span>Home</span></a></li>
-        <li><a href="#"><i class="fa fa-shopping-cart"></i><span>Shop</span></a></li>
+        <li><a href="index.html"><i class="fa fa-home"></i><span>Home</span></a></li>
+        <li><a href="terms.html"><i class="fa fa-shield-halved"></i><span>Privacy & Policy (Terms & Condition) </span></a></li>
         <li><a href="#"><i class="fa fa-user"></i><span>Account</span></a></li>
         <li><a href="#"><i class="fa fa-info-circle"></i><span>About</span></a></li>
       </ul>
@@ -807,6 +795,8 @@
 
         <footer style="order: 3;">
           <img src="https://noahabebe.github.io/Nexus/nexus.png" id="logo" alt="Logo"  ></img>
+          <br>
+          <p>&copy; 2024 Nexus: News Center. All rights reserved.</p>
           <div class="fa"><p>Made with </p></div>
 
           <div class="fa fa-heart"></div>
@@ -1021,6 +1011,7 @@ let allRadioStationsByCountry ={} ;    document.getElementById('countrySelect').
         const cards = document.createElement('play-card1');
         cards.classList.add('play-card1');
         cards.classList.add('searchable');
+        
         if(!stationImg){
           cards.innerHTML = `
 
@@ -1034,7 +1025,7 @@ let allRadioStationsByCountry ={} ;    document.getElementById('countrySelect').
                 <path d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z" />
               </svg>
             </span>
-          </a> <br> <br>`;
+          </a>`;
         } else {
           cards.innerHTML = `<a href="#" class="play-card1" onclick="playRadio('${stationUrl}')">
             <img src="${stationImg}"  alt="${stationName}" class="card__img1">
@@ -1046,7 +1037,7 @@ let allRadioStationsByCountry ={} ;    document.getElementById('countrySelect').
                 <path d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z" />
               </svg>
             </span>
-          </a> <br> <br>  `;
+          </a>`;
         }
          
 
