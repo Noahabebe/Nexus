@@ -14,7 +14,10 @@
       font-optical-sizing: auto;
       font-weight: <weight>;
       font-style: normal;
+      justify-content: right;
+      align-items: center;
     }
+   
     header {
       background-color: #FAF1E5;
       padding: 20px;
@@ -77,7 +80,7 @@
       cursor: pointer;
       z-index: 1000;
     }
-    #logo {
+    .logo {
       position: absolute;
       left: 0px;
       width: 120px;
@@ -90,7 +93,7 @@
   
     <header>
 
-       <img src="https://noahabebe.github.io/Nexus/nexus.png" id="logo" alt="Logo"  ></img>
+       <img src="https://noahabebe.github.io/Nexus/nexus.png" class="logo" alt="Logo"  ></img>
       
       <h2 class="fa">LEGAL NOTICES</h2>
       
@@ -193,7 +196,7 @@
     </main>
 
   <footer style="order: 3;">
-    <img src="https://noahabebe.github.io/Nexus/nexus.png" id="logo" alt="Logo"  ></img>
+    <img src="https://noahabebe.github.io/Nexus/nexus.png" class="logo" alt="Logo"  ></img>
     <br>
     <p>&copy; 2024 Nexus: News Center. All rights reserved.</p>
     <div class="fa"><p>Made with </p></div>
@@ -205,6 +208,12 @@
   </footer>
 
   <script>
+    const logo = document.querySelector('.logo');
+
+    logo.addEventListener("click", function() {
+      window.location.href = "index.html";
+
+    });
 
     const shelfIcon = document.getElementById('shelf-icon');
     const navMenu = document.querySelector('nav ul');
