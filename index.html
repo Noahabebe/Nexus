@@ -12,6 +12,11 @@
   <title>Nexus: News Center</title>
 
   <style>
+
+    h1 {
+      text-align: right;
+      margin-right: 35%;
+    }
     #searchResults {
         margin-top: 10px;
     }
@@ -493,6 +498,7 @@
       width: 100%;
       justify-content: left;
       overflow-y: hidden;
+      
     }
 
     header {
@@ -581,13 +587,14 @@
        display: flex;
        flex-direction: column;
        justify-content: center;
-       flex-wrap: nowrap; 
+       flex-wrap: wrap; 
        overflow: none;
        justify-content: left;
        scrollbar-width: none;
        -ms-overflow-style: none;
       -webkit-order: 2;
        order: 2;
+      position: relative;
     }
     #top{
       -webkit-order: 2;
@@ -595,11 +602,13 @@
       overflow: none;
       position: absolute; 
       top: 0;
-      width: 10px; 
+      width: 35%; 
       height: 200px;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      border-radius: 15px;
+      
     }
 
     #categories {
@@ -727,7 +736,7 @@
 </head>
 
 <body>
-  <header>
+  <header id="header">
     
 
     <img src="https://noahabebe.github.io/Nexus/nexus.png" id="logo" alt="Logo"  ></img>
@@ -788,11 +797,14 @@
         </section>
         
         <section id="headlines" class="searchable">
-          <div style="display: flex; order: 2;" id="top">
-
-          </div>
+         
+           
         </section>
 
+        <div style="display: flex; order: 2;" id="top">
+
+        </div>
+        
         <footer style="order: 3;">
           <img src="https://noahabebe.github.io/Nexus/nexus.png" id="logo" alt="Logo"  ></img>
           <br>
@@ -890,6 +902,7 @@
 
   <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
   <script>
+   
     document.getElementById('search').addEventListener('input', function() {
         search();
     });
@@ -1387,6 +1400,7 @@ let allRadioStationsByCountry ={} ;    document.getElementById('countrySelect').
           const selectedCountry = countrySelect.value.toLowerCase();
           fetchNewsByCountry(selectedCountry);
           await populateCategories(selectedCountry);
+          fetchCountryInfo(selectedCountry);
           
         });
 
@@ -1432,60 +1446,177 @@ let allRadioStationsByCountry ={} ;    document.getElementById('countrySelect').
 
       async function displayHeadlines(selectedCountry) {
         const headlinesSection = document.getElementById('headlines');
-        headlinesSection.innerHTML = '<h1> Ranking Headlines for ' + selectedCountry.toUpperCase() + '</h1>'; 
+        headlinesSection.innerHTML = '<h1> Ranking Headlines for ' + selectedCountry.toUpperCase() + ': </h1>';
+       
 
         const articles = articlesByCountry[selectedCountry];
         const container = document.createElement('div');
         container.classList.add('card-container');
         container.classList.add('searchable');
 
-        
         const rankedArticles = rankArticles(articles);
+        
+
+        
 
         rankedArticles.forEach((article, index) => {
-          const articleDiv = document.createElement('div');
-          articleDiv.classList.add('cards');
-          articleDiv.classList.add('searchable');
+            const articleDiv = document.createElement('div');
+            articleDiv.classList.add('cards');
+            articleDiv.classList.add('searchable');
 
-          articleDiv.style.width = '100%';
-          articleDiv.style.height = 'auto';
-          articleDiv.style.display = 'flex';
-          articleDiv.style.order = '2';
+            articleDiv.style.width = '50%';
+            articleDiv.style.height = 'auto';
+            articleDiv.style.display = 'flex';
+            articleDiv.style.jusifyContent = 'space-between';
+            
 
-          const rank = document.createElement('span');
-          rank.textContent = `${index + 1}`; 
-          rank.style.fontWeight = 'bold';
-          rank.style.fontFamily = 'Arial';
-          rank.classList.add('rank');
-          articleDiv.appendChild(rank);
+       
+         
+                
+            const rank = document.createElement('span');
+            rank.textContent = `${index + 1}`;
+            rank.style.fontWeight = 'bold';
+            rank.style.fontFamily = 'Arial';
+            rank.classList.add('rank');
+            articleDiv.appendChild(rank);
 
-          const cardContent = document.createElement('div');
-          cardContent.classList.add('card-content');
-          
-          const logoImg = document.createElement('img');
-          logoImg.src = article.urlToImage;
-          logoImg.alt = article.source.name;
-          logoImg.style.width = '100%';
-          logoImg.style.height = '80px';
-          logoImg.style.objectFit = 'cover';
-          logoImg.style.borderRadius = '15%';
-          logoImg.style.marginBottom = '10px';
-          cardContent.appendChild(logoImg);
+            const cardContent = document.createElement('div');
+            cardContent.classList.add('card-content');
 
-          const title = document.createElement('h3');
-          title.textContent = article.title;
-          cardContent.appendChild(title);
+            const logoImg = document.createElement('img');
+            logoImg.src = article.urlToImage;
+            logoImg.alt = article.source.name;
+            logoImg.style.width = '50%';
+            logoImg.style.height = '80px';
+            logoImg.style.objectFit = 'cover';
+            logoImg.style.borderRadius = '15%';
+            logoImg.style.marginBottom = '10px';
+            cardContent.appendChild(logoImg);
 
-          articleDiv.appendChild(cardContent);
-          container.appendChild(articleDiv);
+            const title = document.createElement('h3');
+            title.textContent = article.title;
+            cardContent.appendChild(title);
 
-          articleDiv.addEventListener('click', function () {
-            openModal1(article.url);
-          });
+            articleDiv.appendChild(cardContent);
+            document.getElementById('headlines').appendChild(articleDiv);
+
+            articleDiv.addEventListener('click', function () {
+                openModal1(article.url);
+            });
         });
+
 
         headlinesSection.appendChild(container);
       }
+
+  
+
+    async function fetchCountryInfo(countryCode) {
+      try {
+          
+          const countryName = countryMapping[countryCode.toLowerCase()];
+
+         
+          const countryResponse = await fetch('https://noahabebe.github.io/Nexus/city.json'); 
+          const countriesData = await countryResponse.json();
+
+          
+          const countryInfo = countriesData.find(country => country.country === countryName);
+
+          if (!countryInfo) {
+              throw new Error(`Country information not found for ${countryName}`);
+          }
+
+         
+          const capitalCity = countryInfo.city || 'Unknown';
+
+         
+          const timeResponse = await fetch(`https://worldtimeapi.org/api/timezone/${countryName}/${capitalCity}`);
+          const timeData = await timeResponse.json();
+          const currentTime = new Date(timeData.utc_datetime).toLocaleString();
+          console.log(timeData.utc_datetime);
+
+         
+          const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${capitalCity}&appid=e981fa305cf2fc3a67e2f58199c6152c`);
+          const weatherData = await weatherResponse.json();
+          const weatherDescription = weatherData.weather[0].main;
+
+        function getWeatherImage(weatherDescription) {
+            if (weatherDescription === 'Clear') {
+                return "https://noahabebe.github.io/Nexus/sunny.png";
+            } else if (weatherDescription === 'Snow') {
+                return "https://noahabebe.github.io/Nexus/snow.png";
+            } else if (weatherDescription === 'Rain' || weatherDescription === 'Mist') {
+                return "https://noahabebe.github.io/Nexus/rain.png";
+            } else if (weatherDescription === 'Clouds') {
+                return "https://noahabebe.github.io/Nexus/clouds.png";
+            }
+        }
+          // Create weather image element
+          const weatherImg = document.createElement("img");
+          weatherImg.src = getWeatherImage(weatherDescription);
+          weatherImg.style.width = '100px';
+          weatherImg.style.height = '100px';
+          weatherImg.style.borderRadius = '15px';
+          weatherImg.alt = "Weather Image";
+
+          // Fetch exchange rates for the country
+          const exchangeResponse = await fetch(`https://openexchangerates.org/api/latest.json?app_id=72eecc81be974f2b925e30f611ff46bd`);
+          const exchangeData = await exchangeResponse.json();
+          const countryExchangeRate = exchangeData.rates[countryCode.toUpperCase()];
+
+        
+          // Create div element for the info card
+          const infoCard = document.createElement("div");
+          infoCard.id = "info-card";
+          infoCard.classList.add("cards");
+          infoCard.style.width = '100%'
+          infoCard.style.height = 'auto';
+          infoCard.style.display = 'inline-block';
+          infoCard.style.postion= 'fixed'
+          infoCard.style.transform = 'translateY(120%)';
+          infoCard.style.marginRight = '10px';
+          infoCard.style.marginTop = '10px';
+          
+          infoCard.style.padding = '0';
+          infoCard.style.borderRadius = '15px';
+          
+          // Create paragraph elements for country information
+          const countryParagraph = document.createElement("p");
+          countryParagraph.textContent = `Country: ${countryName}`;
+          infoCard.appendChild(countryParagraph);
+
+          const capitalCityParagraph = document.createElement("p");
+          capitalCityParagraph.textContent = `Capital City: ${capitalCity}`;
+          infoCard.appendChild(capitalCityParagraph);
+
+          const currentTimeParagraph = document.createElement("p");
+          currentTimeParagraph.textContent = `Current Time: ${currentTime}`;
+          infoCard.appendChild(currentTimeParagraph);
+
+          const weatherParagraph = document.createElement("p");
+          weatherParagraph.textContent = `Weather: ${weatherDescription}`;
+          infoCard.appendChild(weatherParagraph);
+
+          // Append weather image
+          infoCard.appendChild(weatherImg);
+
+          // Create paragraph element for exchange rate
+          const exchangeRateParagraph = document.createElement("p");
+          exchangeRateParagraph.textContent = `Exchange Rate (vs. USD): ${countryExchangeRate}`;
+          infoCard.appendChild(exchangeRateParagraph);
+
+          document.getElementById('top').innerHTML = '';
+          document.getElementById('top').appendChild(infoCard);
+      } catch (error) {
+          console.error('Error fetching country information:', error.message);
+      }
+
+    }
+
+
+
+
 
       function openModal1(articleUrl) {
         const modal = document.getElementById('myModal');
