@@ -724,11 +724,12 @@
       scrollbar-width: none;
       -ms-overflow-style: none;
     }
-    #logo {
+    .logo {
       position: absolute;
       left: 0px;
       width: 120px;
       height: 40px;
+      
     }
   </style>
   
@@ -739,7 +740,7 @@
   <header id="header">
     
 
-    <img src="https://noahabebe.github.io/Nexus/nexus.png" id="logo" alt="Logo"  ></img>
+    <img src="https://noahabebe.github.io/Nexus/nexus.png" class="logo" alt="Logo"  ></img>
    
       <input type="search" id="search" class="form-control col-md-6" placeholder="Search...">
     
@@ -806,7 +807,7 @@
         </div>
         
         <footer style="order: 3;">
-          <img src="https://noahabebe.github.io/Nexus/nexus.png" id="logo" alt="Logo"  ></img>
+          <img src="https://noahabebe.github.io/Nexus/nexus.png" class="logo" alt="Logo"  ></img>
           <br>
           <p>&copy; 2024 Nexus: News Center. All rights reserved.</p>
           <div class="fa"><p>Made with </p></div>
@@ -903,6 +904,14 @@
   <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
   <script>
    
+    const logo = document.querySelector('.logo');
+    document.addEventListener('load', () => {
+      logo.addEventListener("click", function() {
+        window.location.href = "index.html";
+      });
+    });
+   
+    
     document.getElementById('search').addEventListener('input', function() {
         search();
     });
