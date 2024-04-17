@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Nexus: News Center a place to stay up to date with the latest news and breaking headlines. Nexus offers all type of news (articles,Live channels, radio stations) etc., from all over the world.">
+ <meta name="robots" content="follow, index">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   
@@ -225,7 +227,7 @@
         position: relative;
         display: inline-block;
         margin: 10px;
-        z-index: 1000;
+        z-index: 1;
     }
     .dropdown-content {
         display: none;
@@ -233,18 +235,20 @@
         background-color: whitesmoke;
         min-width: 160px;
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-        z-index: 1001;
+        z-index: 1;
         cursor: pointer;
+        
     }
 
    
     .dropdown-content div {
         padding: 12px 16px;
         cursor: pointer;
-        
+        border-radius: 15px
     }
     .dropdown:hover .dropdown-content {
         display: block;
+        border-radius: 15px;
     }
     .dropdown: .dropdown-content {
         border-bottom: solid;
@@ -601,16 +605,16 @@
       order: 3;
       overflow: none;
       position: absolute; 
-      bottom: 89%;
+      bottom: 83%;
       left: 0;
-      width: 35%; 
+      width: 30%; 
       height: 200px;
       display: flex;
       
       flex-direction: column;
       justify-content: center;
       border-radius: 15px;
-       z-index: -1;
+      z-index: 1;
     }
 
     #categories {
@@ -710,22 +714,40 @@
     #countryLabel {
         margin-right: 5px; 
     }
-  
-    select {
-      display: flex;
-      width: 20px;
-      background-color: #ccc;
-      border-radius: 15px;
-      
-      
+    /* Dropdown styling */
+    .dropdown {
+      position: relative;
+      display: inline-block;
     }
 
-    select option {
-
-      background-color: #ccc;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
+    /* Dropdown content styling */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
     }
+
+    /* Show the dropdown content on hover */
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    /* Style for each dropdown item */
+    .dropdown-content div {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    /* Hover color change for dropdown items */
+    .dropdown-content div:hover {
+      background-color: #f1f1f1;
+    }
+
     .logo {
       position: absolute;
       left: 0px;
@@ -733,12 +755,51 @@
       height: 40px;
       
     }
+    #splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #FAF1E5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999; 
+    }
+
+
+    #loading-bar {
+      width: 50%;
+      height: 20px;
+      background-color: lightgray;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+    .country-flag {
+      width: 20px; 
+      height: auto; 
+      margin-right: 5px; 
+    }
+    .svg {
+      width: 20px; 
+      height: auto; 
+      margin-left: 5px; 
+    }
+
   </style>
   
   <link href="https://vjs.zencdn.net/7.11.4/video-js.min.css" rel="stylesheet">
 </head>
 
+  
 <body>
+  <div id="splash-screen">
+    <img src="https://noahabebe.github.io/Nexus/nexus.png" alt="Splash Image">
+    <div id="loading-bar"></div>
+  </div>
+  
   <header id="header">
     
 
@@ -748,11 +809,12 @@
     
      <div id="searchResults"></div>
 
-    <div id="select" >
+    <div id="select"  class="dropdown" >
       
-      <select id="countrySelect">
-      
-      </select>
+      <svg  class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>
+      <div id="countrySelect" class="dropdown">
+      </div>
+
       <span id="countryLabel">Country</span>
     </div>
 
@@ -906,6 +968,24 @@
 
   <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
   <script>
+    document.addEventListener("DOMContentLoaded", function() {
+     
+      let progressBar = document.getElementById('loading-bar');
+      let width = 1;
+      let interval = setInterval(function() {
+        if (width >= 100) {
+          clearInterval(interval);
+          
+          document.getElementById('splash-screen').style.display = 'none';
+        } else {
+          width++;
+          progressBar.style.width = width + '%';
+        }
+      }, 50);
+
+      initializePage();
+    });
+
    
     const logo = document.querySelector('.logo');
     document.addEventListener('load', () => {
@@ -962,33 +1042,30 @@
     }
   
     const countryMapping = {
-      'us': 'United States',
-      'au': 'Australia',
-      'no': 'Norway',
-      'it': 'Italy',
-      'sa': 'Saudi Arabia',
-      'pk': 'Pakistan',
-      'gb': 'United Kingdom',
-      'de': 'Germany',
-      'br': 'Brazil',
-      'ca': 'Canada',
-      'es': 'Spain',
-      'ar': 'Argentina',
-      'fr': 'France',
-      'in': 'India',
-      'is': 'Iceland',
-      'ru': 'Russia',
-      'se': 'Sweden',
-      'za': 'South Africa',
-      'ie': 'Ireland',
-      'nl': 'Netherlands',
-      'zh': 'China'
+      'US': 'United States',
+      'AU': 'Australia',
+      'NO': 'Norway',
+      'IT': 'Italy',
+      'SA': 'Saudi Arabia',
+      'PK': 'Pakistan',
+      'GB': 'United Kingdom',
+      'DE': 'Germany',
+      'BR': 'Brazil',
+      'CA': 'Canada',
+      'ES': 'Spain',
+      'AR': 'Argentina',
+      'FR': 'France',
+      'IN': 'India',
+      'IS': 'Iceland',
+      'RU': 'Russia',
+      'SE': 'Sweden',
+      'ZA': 'South Africa',
+      'IE': 'Ireland',
+      'NL': 'Netherlands',
+      'ZH': 'China' 
     };
 
-let allRadioStationsByCountry ={} ;    document.getElementById('countrySelect').addEventListener('change', function() {
-      const countryCode = this.value || countryMapping[this.value];
-      fetchRadioStations(countryCode);
-    });
+let allRadioStationsByCountry ={} ;    
 
 
     async function fetchRadioStations(countryCode) {
@@ -997,9 +1074,8 @@ let allRadioStationsByCountry ={} ;    document.getElementById('countrySelect').
         try {
             const response = await fetch(url);
             const data = await response.json();
-
-
-            const countryName = countryMapping[countryCode];
+            console.log(countryCode);
+            const countryName = countryMapping[countryCode.toUpperCase()];
             console.log('Country Name:', countryName);
 
           
@@ -1279,21 +1355,71 @@ let allRadioStationsByCountry ={} ;    document.getElementById('countrySelect').
     }
 
     
+   
+    async function fetchCountryData() {
+      try {
+        const response = await fetch('https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/by-code.json');
+         
+        const countryData = await response.json();
+        const mappedCountries = {};
+        for (let countryCode in countryData) {
+          // Ensure the country code is in uppercase for proper mapping.
+          const upperCaseCountryCode = countryCode.toUpperCase();
+          if (countryMapping[upperCaseCountryCode]) {
+            mappedCountries[upperCaseCountryCode] = countryData[countryCode];
+          }
+        }
+        fetchRadioStations(mappedCountries);
+        return mappedCountries;
+        
+      } catch (error) {
+        throw new Error('Error fetching country data:', error);
+      }
+    }
+
     async function populateCountriesDropdown() {
       try {
-        const newsData = await fetchNewsData();
-        const countries = Object.keys(newsData);
-        const countrySelect = document.getElementById('countrySelect');
-        countries.forEach(country => {
-          const option = document.createElement('option');
-          option.value = country.toLowerCase();
-          option.textContent = country;
-          countrySelect.appendChild(option);
-        });
+        const countryData = await fetchCountryData();
+        const dropdown = document.getElementById('countrySelect');
+
+        if (!dropdown) {
+          throw new Error('Dropdown element with ID "countrySelect" not found');
+        }
+
+        // Create a container for the dropdown content
+        const dropdownContent = document.createElement('div');
+        dropdownContent.classList.add('dropdown-content');
+        dropdownContent.style.borderRadius = '15px';
+        dropdown.appendChild(dropdownContent);
+
+        for (let countryCode in countryData) {
+          const country = countryData[countryCode];
+          if (country && country.image) {
+           
+            const item = document.createElement('div');
+            item.setAttribute('data-country-code', countryCode);
+            item.textContent = country.name;
+
+           
+            const flagImg = document.createElement('img');
+            flagImg.src = country.image;
+            flagImg.alt = country.emoji;
+            flagImg.style.width = '20px';
+            flagImg.style.height = '20px';
+            flagImg.classList.add('country-flag');
+
+           
+            item.appendChild(flagImg);
+            dropdownContent.appendChild(item);
+          } else {
+            throw new Error(`Country "${countryCode}" does not have an image`);
+          }
+        }
       } catch (error) {
         console.error('Error populating countries dropdown:', error);
       }
     }
+
 
    
     async function populateCategories(selectedCountry) {
@@ -1404,31 +1530,57 @@ let allRadioStationsByCountry ={} ;    document.getElementById('countrySelect').
     async function initializePage() {
       try {
         await populateCountriesDropdown();
-        
-        const countrySelect = document.getElementById('countrySelect');
+
+        // Since we're using a custom dropdown, we need to define a new way to handle selection.
+        const dropdown = document.getElementById('countrySelect');
+        if (!dropdown) {
+          throw new Error('Dropdown element with ID "countrySelect" not found');
+        }
 
        
+        const dropdownItems = dropdown.querySelectorAll('.dropdown-content div');
+        if (dropdownItems.length === 0) {
+          throw new Error('No options found in the dropdown');
+        }
+
+  
+
         
-        countrySelect.addEventListener('change', async () => {
-          const selectedCountry = countrySelect.value.toLowerCase();
+        dropdownItems.forEach(item => {
+          item.addEventListener('click', async () => {
+           
+            const selectedCountry = item.getAttribute('data-country-code').toLowerCase();
+
+            
+            fetchNewsByCountry(selectedCountry);
+            await populateCategories(selectedCountry);
+            fetchCountryInfo(selectedCountry);
+            fetchRadioStations(selectedCountry);
+          });
+        });
+        
+          
+        if (dropdownItems[3]) {
+          dropdownItems[3].click();
+          const selectedCountry = dropdownItems[3].getAttribute('data-country-code').toLowerCase();
+
+
           fetchNewsByCountry(selectedCountry);
           await populateCategories(selectedCountry);
           fetchCountryInfo(selectedCountry);
-          
-        });
-
-        const firstOption = countrySelect.querySelector('option');
-        firstOption.selected = true; 
-        const clickEvent = new Event('change'); 
-        countrySelect.dispatchEvent(clickEvent);
-        
+          fetchRadioStations(selectedCountry);
+        } else {
+          throw new Error('Fourth option not found in the dropdown');
+        }
+       
       } catch (error) {
         console.error('Error initializing page:', error);
       }
     }
 
-   
-    initializePage();
+    
+
+    
 
     
     
@@ -1527,7 +1679,7 @@ let allRadioStationsByCountry ={} ;    document.getElementById('countrySelect').
     async function fetchCountryInfo(countryCode) {
       try {
           
-          const countryName = countryMapping[countryCode.toLowerCase()];
+          const countryName = countryMapping[countryCode.toUpperCase()];
 
          
           const countryResponse = await fetch('https://noahabebe.github.io/Nexus/city.json'); 
@@ -1585,9 +1737,9 @@ let allRadioStationsByCountry ={} ;    document.getElementById('countrySelect').
           infoCard.classList.add("cards");
           infoCard.style.width = '100%'
           infoCard.style.height = 'auto';
-          
+          infoCard.style.display = 'flex';
           infoCard.style.borderRadius = '15px';
-          
+          infoCard.style.order = '1';
           // Create paragraph elements for country information
           const countryParagraph = document.createElement("p");
           countryParagraph.textContent = `Country: ${countryName}`;
@@ -1605,23 +1757,85 @@ let allRadioStationsByCountry ={} ;    document.getElementById('countrySelect').
           weatherParagraph.textContent = `Weather: ${weatherDescription}`;
           infoCard.appendChild(weatherParagraph);
 
-          // Append weather image
+         
           infoCard.appendChild(weatherImg);
 
-          // Create paragraph element for exchange rate
+          
           const exchangeRateParagraph = document.createElement("p");
           exchangeRateParagraph.textContent = `Exchange Rate (vs. USD): ${countryExchangeRate}`;
           infoCard.appendChild(exchangeRateParagraph);
 
+          
+         
+          
+          const emailForm = document.createElement('form');
+          emailForm.id = 'email-form';
+          emailForm.style.display = 'flex';
+          emailForm.style.flexDirection = 'column';
+          emailForm.style.alignItems = 'center';
+          emailForm.style.justifyContent = 'center';
+          emailForm.style.order = '2';
+          emailForm.style.width = '100%';
+          emailForm.style.marginTop = '10%';
+          emailForm.style.height = 'auto';
+          emailForm.style.borderRadius = '15px';
+          emailForm.style.backgroundColor = '#f2f2f2';
+
+        const emailParagraph = document.createElement('p');
+          emailParagraph.textContent = 'Stay In The Know:';
+
+        emailForm.appendChild(emailParagraph);
+          const input = document.createElement('input');
+          input.type = 'email';
+          input.placeholder = 'Enter your email';
+          input.style.width = '80%';
+          input.style.height = '30px';
+          input.style.borderRadius = '15px';
+          emailForm.appendChild(input);
+          const submitButton = document.createElement('button');
+          submitButton.textContent = 'Submit';
+          submitButton.style.width = '80%';
+          submitButton.style.height = '30px';
+          submitButton.style.borderRadius = '15px';
+          submitButton.style.backgroundColor = '#4CAF50';
+          submitButton.style.color = 'white';
+          submitButton.style.cursor = 'pointer';
+          submitButton.addEventListener('click', function(){
+            const email = input.value;
+            if (email.includes('@') && email.includes('.')) {
+              alert('Thank you for subscribing!');
+              emailForm.reset();
+            } else {
+              alert('Please enter a valid email address.');
+            }
+          });
+
+          emailForm.appendChild(submitButton);
+        
+          
+        
           document.getElementById('top').innerHTML = '';
+
+
+
+        const web_info = document.createElement('div');
+        web_info.id = 'web-info';
+        web_info.style.display = 'flex';
+        
+        
+          document.getElementById('top').appendChild(emailForm);
           document.getElementById('top').appendChild(infoCard);
+
+        
       } catch (error) {
           console.error('Error fetching country information:', error.message);
       }
+      
 
     }
 
 
+    
 
 
 
