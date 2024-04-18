@@ -997,6 +997,8 @@
     
     document.getElementById('search').addEventListener('input', function() {
         search();
+      const top = document.getElementById('top');
+      top.style.display = 'none';
     });
 
     function search() {
@@ -1386,7 +1388,7 @@ let allRadioStationsByCountry ={} ;
           throw new Error('Dropdown element with ID "countrySelect" not found');
         }
 
-        // Create a container for the dropdown content
+       
         const dropdownContent = document.createElement('div');
         dropdownContent.classList.add('dropdown-content');
         dropdownContent.style.borderRadius = '15px';
@@ -1531,7 +1533,8 @@ let allRadioStationsByCountry ={} ;
       try {
         await populateCountriesDropdown();
 
-        // Since we're using a custom dropdown, we need to define a new way to handle selection.
+        
+        
         const dropdown = document.getElementById('countrySelect');
         if (!dropdown) {
           throw new Error('Dropdown element with ID "countrySelect" not found');
@@ -1717,7 +1720,7 @@ let allRadioStationsByCountry ={} ;
                 return "https://noahabebe.github.io/Nexus/clouds.png";
             }
         }
-          // Create weather image element
+        
           const weatherImg = document.createElement("img");
           weatherImg.src = getWeatherImage(weatherDescription);
           weatherImg.style.width = '100px';
@@ -1725,13 +1728,13 @@ let allRadioStationsByCountry ={} ;
           weatherImg.style.borderRadius = '15px';
           weatherImg.alt = "Weather Image";
 
-          // Fetch exchange rates for the country
+         
           const exchangeResponse = await fetch(`https://openexchangerates.org/api/latest.json?app_id=72eecc81be974f2b925e30f611ff46bd`);
           const exchangeData = await exchangeResponse.json();
           const countryExchangeRate = exchangeData.rates[countryCode.toUpperCase()];
 
         
-          // Create div element for the info card
+         
           const infoCard = document.createElement("div");
           infoCard.id = "info-card";
           infoCard.classList.add("cards");
@@ -1740,7 +1743,8 @@ let allRadioStationsByCountry ={} ;
           infoCard.style.display = 'flex';
           infoCard.style.borderRadius = '15px';
           infoCard.style.order = '1';
-          // Create paragraph elements for country information
+         
+        
           const countryParagraph = document.createElement("p");
           countryParagraph.textContent = `Country: ${countryName}`;
           infoCard.appendChild(countryParagraph);
